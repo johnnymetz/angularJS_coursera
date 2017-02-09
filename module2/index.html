@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" ng-app="ShoppingListCheckOff">
   <head>
     <title>Shopping List Check Off</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,11 +8,11 @@
       .emptyMessage {
         font-weight: bold;
         color: red;
-        font-size: 1.2em;
+        font-size: 1.1em;
       }
       li {
         margin-bottom: 7px;
-        font-size: 1.2em;
+        font-size: 1.1em;
       }
       li > button {
         margin-left: 6px;
@@ -24,30 +24,63 @@
   </head>
 <body>
   <div class="container">
-  <h1>Shopping List Check Off</h1>
-
-  <div class="row">
-
-    <!-- To Buy List -->
-    <div class="col-md-6">
-     <h2>To Buy:</h2>
-     <ul>
-       <li>Buy 10 cookies <button class="btn btn-default"><span class="glyphicon glyphicon-ok"></span> Bought</button></li>
-       <li>Buy 10 cookies <button class="btn btn-default"><span class="glyphicon glyphicon-ok"></span> Bought</button></li>
-     </ul>
-     <div class="emptyMessage">Everything is bought!</div>
-    </div>
-
-    <!-- Already Bought List -->
-    <div class="col-md-6">
-     <h2>Already Bought:</h2>
-     <ul>
-       <li>Bought 10 cookies</li>
-     </ul>
-     <div class="emptyMessage">Nothing bought yet.</div>
-    </div>
+  <div class="jumbotron">
+    <h2>Shopping List Check Off</h2>
+    <p>Keep track of what you need</p>
   </div>
-</div>
+
+    <div class="row">
+      <div class="col-sm-6" ng-controller="ToBuyController as list1">
+        <!-- To Buy List -->
+        <h3>To Buy:</h3>
+        <ul>
+          <li ng-repeat="item in list1.items">
+            Buy {{ item.quantity }} {{ item.name }}
+            <button class="btn btn-default" ng-click="list1.buyItem($index)"><span class="glyphicon glyphicon-ok"></span> Bought</button>
+          </li>
+        </ul>
+        <div ng-if="list1.items.length == 0" class="emptyMessage">Everything is bought!</div>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addItemModal">Add Item to List</button>
+
+        <!-- Modal to Add Item -->
+        <div id="addItemModal" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add Item to Buy</h4>
+              </div>
+              <div class="modal-body">
+                <input type="text" ng-model="list1.itemName" placeholder="item name" required>
+                <input type="text" ng-model="list1.itemQuantity" placeholder="item quantity" required>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-defualt" data-dismiss="modal" ng-click="list1.addItem()">Add Item</button>
+              </div>
+            </div>
+          </div>
+        </div><!-- .modal -->
+      </div><!-- .col-md-6 -->
+
+      <div class="col-sm-6" ng-controller="AlreadyBoughtController as list2">
+        <!-- Already Bought List -->
+        <h2>Already Bought:</h2>
+        <ul>
+          <li ng-repeat="item in list2.items">
+            Bought {{ item.quantity }} {{ item.name }}
+          </li>
+        </ul>
+        <div ng-if="list2.items.length == 0" class="emptyMessage">Nothing bought yet.</div>
+      </div><!-- .col-md-6 -->
+    </div><!-- .row -->
+    <hr>
+  </div><!-- .container -->
+
+
+  <script src="jquery-3.1.1.min.js"></script>
+  <script src="bootstrap.min.js"></script>
+  <script src="angular.js"></script>
+  <script src="app.js"></script>
 
 </body>
 </html>
