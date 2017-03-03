@@ -1,0 +1,24 @@
+<!-- Display Items in list -->
+<div class="row">
+  <div class="col-sm-12">
+  	<h3>Total items: {{ totalItems }}</h3>
+		<table class="table table-bordered table-hover">
+			<thead>
+				<tr>
+					<td>Name</td>
+					<td>Short Name</td>
+					<td>Description</td>
+					<td>Delete</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="item in items">
+					<td>{{ item.name }}</td>
+					<td>{{ item.short_name }}</td>
+					<td>{{ item.description }}</td>
+					<td><button ng-click="onRemove({index: $index})" class="btn btn-warning">Don't want this one!</button></td>
+				</tr>
+			</tbody>
+		</table>
+  </div><!-- .col-sm-12 -->
+</div><!-- .row -->
